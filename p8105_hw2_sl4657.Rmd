@@ -11,12 +11,12 @@ editor_options:
 library(tidyverse)
 library(readxl)
 library(dplyr)
-ptw_data = 
+mtw_data = 
   read_excel(
-    "data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=2) %>% 
+    "data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=1) %>% 
   janitor::clean_names() %>% 
-  filter(dumpster !="lyric")%>% 
-  drop_na(dumpster) %>% 
+  filter(!is.na(dumpster))%>% 
+  select(-15) %>% 
   mutate(sports_balls = round(sports_balls, digits = 0)) %>% 
   mutate(sports_balls = as.integer(sports_balls))
 ```
