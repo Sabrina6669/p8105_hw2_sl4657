@@ -21,3 +21,15 @@ ptw_data =
   mutate(sports_balls = as.integer(sports_balls))
 ```
 
+```{r}
+p8_data = 
+  readxl::read_excel(
+    "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=3,range = "A2:B14") %>% 
+  janitor::clean_names()
+
+p7_data = 
+  readxl::read_excel(
+    "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=4,range = "A2:B14") %>% 
+  janitor::clean_names() 
+```
+
