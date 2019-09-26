@@ -34,5 +34,9 @@ p7_data =
     "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=4,range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   mutate(year= "2017")
+
+p78_data=
+  bind_rows(p7_data, p8_data) %>% 
+  mutate(month = month.abb[month])
 ```
 
