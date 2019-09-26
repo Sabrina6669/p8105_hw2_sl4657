@@ -1,0 +1,20 @@
+---
+title: "p8105_hw2_sl4657"
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Problem 1
+## Use Mr.Trash.Wheel sheet
+```{r}
+library(tidyverse)
+library(readxl)
+library(dplyr)
+ptw_data = 
+  read_excel(
+    "data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=2) %>% 
+  janitor::clean_names() %>% 
+  filter(dumpster !="lyric")
+```
+
