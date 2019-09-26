@@ -25,11 +25,14 @@ ptw_data =
 p8_data = 
   readxl::read_excel(
     "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=3,range = "A2:B14") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  drop_na() %>% 
+  mutate(year= "2018")
 
 p7_data = 
   readxl::read_excel(
     "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=4,range = "A2:B14") %>% 
-  janitor::clean_names() 
+  janitor::clean_names() %>% 
+  mutate(year= "2017")
 ```
 
