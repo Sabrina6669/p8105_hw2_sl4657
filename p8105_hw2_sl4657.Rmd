@@ -15,6 +15,7 @@ ptw_data =
   read_excel(
     "data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=2) %>% 
   janitor::clean_names() %>% 
-  filter(dumpster !="lyric")
+  filter(dumpster !="lyric")%>% 
+  drop_na(dumpster)
 ```
 
