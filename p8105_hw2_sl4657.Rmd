@@ -2,7 +2,7 @@
 title: "p8105_hw2_sl4657"
 output: github_document
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 # Problem 1
@@ -46,7 +46,8 @@ The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, i
 ```{r}
 pols_data = 
   read_csv(file = "./data files/pols-month.csv") %>% 
-  separate(col = mon, into = c("year", "month", "day"), "-")
+  separate(col = mon, into = c("year", "month", "day"), "-") %>%
+  mutate(month= recode(month, `01`= "Jan", `02`= "Feb", `03`= "Mar", `04`= "Apr", `05`= "May", `06`= "Jun", `07`= "Jul", `08`= "Aug", `09`= "Sep", `10`= "Oct", `11`= "Nov", `12`= "Dec"))
 ```
 
 
