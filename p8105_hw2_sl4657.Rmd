@@ -41,6 +41,15 @@ p78_data=
 ```
 The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, in 2017 precipitation dataset is `r nrow(p7_data)`, key variables are `r colnames(p78_data)`. The total precipitation in 2018 is `r sum(pull(p8_data, total))`, the median number of sports balls in a dumpster in 2017 is `r median(pull(mtw_data,sports_balls), 167:221)`.
 
+# Problem 2
+##  Use the FiveThirtyEight data
+```{r}
+pols_data = 
+  read_csv(file = "./data files/pols-month.csv") %>% 
+  separate(col = mon, into = c("year", "month", "day"), "-")
+```
+
+
 
 
 
