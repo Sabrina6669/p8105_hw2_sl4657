@@ -54,7 +54,8 @@ pols_data =
     c(ends_with("gop"), ends_with("dem")),
     names_to = "party",
     values_to = "president"
-  )
+  ) %>% 
+  select(-day)
 ```
 
 
