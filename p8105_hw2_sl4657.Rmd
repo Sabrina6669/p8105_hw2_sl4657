@@ -56,6 +56,14 @@ pols_data =
     values_to = "president"
   ) %>% 
   select(-day)
+
+snp_data =
+  read_csv(file = "./data files/snp.csv") %>% 
+  separate(col = date, into = c("month", "day", "year"), "/") %>% 
+  mutate(month= recode(month, `1`= "Jan", `2`= "Feb", `3`= "Mar", `4`= "Apr", `5`= "May", `6`= "Jun", `7`= "Jul", `8`= "Aug", `9`= "Sep", `10`= "Oct", `11`= "Nov", `12`= "Dec")) %>% 
+  arrange(year, month) %>% 
+  select(year, month, everything()) %>% 
+  select(-day)
 ```
 
 
