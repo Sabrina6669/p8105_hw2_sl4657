@@ -2,7 +2,7 @@
 title: "p8105_hw2_sl4657"
 output: github_document
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 # Problem 1
@@ -37,9 +37,10 @@ p7_data =
 
 p78_data=
   bind_rows(p7_data, p8_data) %>% 
-  mutate(month = month.abb[month])
+  mutate(month = month.abb[month]) %>% 
+  select(year, everything())
 ```
-The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, in 2017 precipitation dataset is `r nrow(p7_data)`, key variables are `r colnames(p78_data)`. The total precipitation in 2018 is `r sum(pull(p8_data, total))`, the median number of sports balls in a dumpster in 2017 is `r median(pull(mtw_data,sports_balls), 167:221)`.
+The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, in 2017 precipitation dataset is `r nrow(p7_data)`, key variables are `r colnames(p78_data[1:2])`. The total precipitation in 2018 is `r sum(pull(p8_data, total))`, the median number of sports balls in a dumpster in 2017 is `r median(pull(mtw_data,sports_balls), 167:221)`.
 
 # Problem 2
 ##  Use the FiveThirtyEight data
