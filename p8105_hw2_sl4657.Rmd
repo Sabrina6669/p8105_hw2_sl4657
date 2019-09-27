@@ -64,6 +64,15 @@ snp_data =
   arrange(year, month) %>% 
   select(year, month, everything()) %>% 
   select(-day)
+
+unem_data =
+  read_csv(file = "./data files/unemployment.csv") %>% 
+  pivot_longer(
+    Jan: Dec,
+    names_to = "month",
+    values_to = "perc"
+  ) %>% 
+  janitor::clean_names() 
 ```
 
 
