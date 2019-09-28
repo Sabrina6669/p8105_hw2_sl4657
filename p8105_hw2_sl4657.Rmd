@@ -65,12 +65,17 @@ unem_data =
   pivot_longer(
     Jan: Dec,
     names_to = "month",
-    values_to = "perc"
+    values_to = "unem_perc"
   ) %>% 
   janitor::clean_names() %>% view
 
 s_p = 
-  inner_join(snp_data, pols_data, by= c("year", "month")) %>% view
+  inner_join(snp_data, pols_data, by= c("year", "month")) %>% 
+  mutate(year= as.double(year))
+
+s_p_u=
+  full_join(s_p, unem_data, by= c("year", "month"))
+
 ```
 
 
