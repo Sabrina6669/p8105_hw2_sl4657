@@ -18,7 +18,7 @@ mtw_data =
   filter(!is.na(dumpster))%>% 
   select(-15) %>% 
   mutate(sports_balls = round(sports_balls, digits = 0)) %>% 
-  mutate(sports_balls = as.integer(sports_balls))
+  mutate(sports_balls = as.integer(sports_balls)) %>% view
 ```
 
 ```{r}
@@ -27,18 +27,18 @@ p8_data =
     "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=3,range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   drop_na() %>% 
-  mutate(year= "2018")
+  mutate(year= "2018") %>% view
 
 p7_data = 
   readxl::read_excel(
     "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=4,range = "A2:B14") %>% 
   janitor::clean_names() %>% 
-  mutate(year= "2017")
+  mutate(year= "2017") %>% view
 
 p78_data=
   bind_rows(p7_data, p8_data) %>% 
   mutate(month = month.abb[month]) %>% 
-  select(year, everything())
+  select(year, everything()) %>% view
 ```
 The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, in 2017 precipitation dataset is `r nrow(p7_data)`, key variables are `r colnames(p78_data[1:2])`. The total precipitation in 2018 is `r sum(pull(p8_data, total))`, the median number of sports balls in a dumpster in 2017 is `r median(pull(mtw_data,sports_balls), 167:221)`.
 
@@ -49,13 +49,8 @@ pols_data =
   read_csv(file = "./data files/pols-month.csv") %>% 
   separate(col = mon, into = c("year", "month", "day"), "-") %>%
   mutate(month= recode(month, `01`= "Jan", `02`= "Feb", `03`= "Mar", `04`= "Apr", `05`= "May", `06`= "Jun", `07`= "Jul", `08`= "Aug", `09`= "Sep", `10`= "Oct", `11`= "Nov", `12`= "Dec")) %>% 
-  select(-prez_gop, -prez_dem) %>% 
-  pivot_longer(
-    c(ends_with("gop"), ends_with("dem")),
-    names_to = "party",
-    values_to = "president"
-  ) %>% 
-  select(-day)
+  mutate(president = recode(prez_gop, `0` ="dem", `1` = "gop")) %>% 
+  select(-day,- prez_gop, -prez_dem) %>% view
 
 snp_data =
   read_csv(file = "./data files/snp.csv") %>% 
@@ -63,7 +58,7 @@ snp_data =
   mutate(month= recode(month, `1`= "Jan", `2`= "Feb", `3`= "Mar", `4`= "Apr", `5`= "May", `6`= "Jun", `7`= "Jul", `8`= "Aug", `9`= "Sep", `10`= "Oct", `11`= "Nov", `12`= "Dec")) %>% 
   arrange(year, month) %>% 
   select(year, month, everything()) %>% 
-  select(-day)
+  select(-day) %>% view
 
 unem_data =
   read_csv(file = "./data files/unemployment.csv") %>% 
@@ -72,7 +67,10 @@ unem_data =
     names_to = "month",
     values_to = "perc"
   ) %>% 
-  janitor::clean_names() 
+  janitor::clean_names() %>% view
+
+s_p = 
+  inner_join(snp_data, pols_data, by= c("year", "month")) %>% view
 ```
 
 
