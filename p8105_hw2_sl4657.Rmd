@@ -114,6 +114,13 @@ eth_rank=
   pbn_data %>% 
   filter(childs_first_name %in% "Ethan")
 eth_rank
-  
+
+pbn_data %>% 
+  filter(gender=="male",
+         ethnicity=="white non hispanic",
+         year_of_birth=="2016") %>% 
+  ggplot(aes(x=rank, y=count))+
+  geom_point()+
+  labs(title="Relationship between number and rank in popularity of the name of a male, white non-hispanic child born in 2016")
 ```
 
