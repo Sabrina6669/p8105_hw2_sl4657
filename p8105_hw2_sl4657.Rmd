@@ -102,8 +102,13 @@ pbn_data=
   mutate(gender= str_to_lower(gender),
          ethnicity= str_to_lower(ethnicity),
          childs_first_name = str_to_title(childs_first_name)) %>% 
-  distinct(childs_first_name, .keep_all = TRUE)
+  distinct(year_of_birth, gender, ethnicity, childs_first_name, .keep_all = TRUE)
+pbn_data
 
+oli_rank=
+  pbn_data %>%
+  filter(childs_first_name %in% "Olivia")
+oli_rank
 
 
 ```
