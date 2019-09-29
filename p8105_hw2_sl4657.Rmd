@@ -101,7 +101,8 @@ pbn_data=
   janitor::clean_names() %>%
   mutate(gender= str_to_lower(gender),
          ethnicity= str_to_lower(ethnicity),
-         childs_first_name = str_to_title(childs_first_name))
+         childs_first_name = str_to_title(childs_first_name)) %>% 
+  distinct(childs_first_name, .keep_all = TRUE)
 
 
 
