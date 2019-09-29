@@ -110,6 +110,10 @@ oli_rank=
   filter(childs_first_name %in% "Olivia")
 oli_rank
 
-
+eth_rank=
+  pbn_data %>% 
+  filter(childs_first_name %in% "Ethan")
+eth_rank
+  
 ```
 
