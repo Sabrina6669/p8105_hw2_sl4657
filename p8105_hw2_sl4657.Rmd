@@ -13,7 +13,7 @@ library(readxl)
 library(dplyr)
 mtw_data = 
   read_excel(
-    "data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=1) %>% 
+    "data files/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet=1) %>% 
   janitor::clean_names() %>% 
   filter(!is.na(dumpster))%>% 
   select(-15) %>% 
@@ -25,7 +25,7 @@ mtw_data
 ```{r}
 p8_data = 
   readxl::read_excel(
-    "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=3,range = "A2:B14") %>% 
+    "./data files/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet=5,range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   drop_na() %>% 
   mutate(year= "2018")
@@ -33,18 +33,19 @@ p8_data
 
 p7_data = 
   readxl::read_excel(
-    "./data files/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet=4,range = "A2:B14") %>% 
+    "./data files/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet=6,range = "A2:B14") %>% 
   janitor::clean_names() %>% 
+  drop_na() %>% 
   mutate(year= "2017")
 p7_data
 
 p78_data=
   bind_rows(p7_data, p8_data) %>% 
-  mutate(month = month.abb[month]) %>% 
+  mutate(month = month.name[month]) %>% 
   select(year, everything())
 p78_data
 ```
-The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, in 2017 precipitation dataset is `r nrow(p7_data)`, key variables are `r colnames(p78_data[1:2])`. The total precipitation in 2018 is `r sum(pull(p8_data, total))`, the median number of sports balls in a dumpster in 2017 is `r median(pull(mtw_data,sports_balls), 167:221)`.
+The number of observations in 2018 precipitation dataset is `r nrow(p8_data)`, in 2017 precipitation dataset is `r nrow(p7_data)`, key variables are `r colnames(p78_data[1:2])`, which are used to combine 2018 precipitation dataset and 2017 precipitation dataset. The total precipitation in 2018 is `r sum(pull(p8_data, total))`, the median number of sports balls in a dumpster in 2017 is `r median(pull(mtw_data,sports_balls), 167:221)`.
 
 # Problem 2
 ##  Use the FiveThirtyEight data
@@ -62,12 +63,10 @@ pols_data
 snp_data =
   read_csv(file = "./data files/snp.csv") %>% 
   separate(col = date, into = c("month", "day", "year"), "/") %>% 
-  mutate(
-    month = as.numeric(month),
-    month = month.abb[month])%>% 
+  mutate(month = as.numeric(month))%>% 
   arrange(year, month) %>% 
-  select(year, month, everything()) %>% 
-  select(-day)
+  mutate(month=month.abb[month]) %>% 
+  select(year, month, close) 
 snp_data
 
 unem_data =
@@ -81,7 +80,7 @@ unem_data =
 unem_data
 
 s_p = 
-  inner_join(snp_data, pols_data, by= c("year", "month")) %>% 
+  full_join(pols_data, snp_data, by= c("year","month")) %>% 
   mutate(year= as.double(year))
 
 s_p_u=
