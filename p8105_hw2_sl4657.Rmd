@@ -1,5 +1,6 @@
 ---
 title: "p8105_hw2_sl4657"
+author: "Si Li"
 output: github_document
 editor_options: 
   chunk_output_type: console
@@ -91,6 +92,7 @@ s_p_u
 In the pols_data, dimension is `r dim(pols_data)`, range of years is `r range(pull(pols_data, year))`,  key variables are `r colnames(pols_data[1:2])`.
 In the snp_data, dimension is `r dim(snp_data)`, range of years is `r range(pull(snp_data, year))`,  key variables are `r colnames(snp_data[1:2])`.
 In the unem_data, dimension is `r dim(unem_data)`, range of years is `r range(pull(unem_data, year))`,  key variables are `r colnames(unem_data[1:2])`.
+Key variables in order to combine these datasets are the same.
 
 # Problem 3
 ## Use data on Popularity of baby names
