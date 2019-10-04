@@ -103,18 +103,44 @@ pbn_data=
   mutate(gender= str_to_lower(gender),
          ethnicity= str_to_lower(ethnicity),
          childs_first_name = str_to_title(childs_first_name)) %>% 
+  mutate(ethnicity= recode(ethnicity, "asian and paci"= "asian and pacific islander", 
+                           "black non hisp"= "black non hispanic",
+                           "white non hisp"= "white non hispanic")) %>% 
   distinct(year_of_birth, gender, ethnicity, childs_first_name, .keep_all = TRUE)
 pbn_data
 
 oli_rank=
   pbn_data %>%
-  filter(childs_first_name %in% "Olivia")
+  filter(childs_first_name %in% "Olivia") %>% 
+  select(-count, -gender,-childs_first_name) %>% 
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "rank"
+  ) %>% 
+  knitr::kable(caption = "Rank in popularity of “Olivia” as a female baby name over time")
 oli_rank
 
 eth_rank=
   pbn_data %>% 
-  filter(childs_first_name %in% "Ethan")
+  filter(childs_first_name %in% "Ethan") %>% 
+  select(-count, -gender,-childs_first_name) %>% 
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "rank"
+  ) %>% 
+  knitr::kable(caption = "Rank in popularity of “Ethan” as a male baby name over time")
 eth_rank
+
+male_rank=
+  pbn_data %>% 
+  filter(gender== "male", rank==1) %>% 
+  select(-count, -gender) %>% 
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "childs_first_name"
+  ) %>% 
+  knitr::kable(caption = "The most popular name among male children over time")
+male_rank
 
 pbn_data %>% 
   filter(gender=="male",
